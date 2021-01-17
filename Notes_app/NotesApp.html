@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Notes</title>
+
+<style type="text/css">
+        body {
+            margin: 3em
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .unit-price {
+            margin-right: 2rem;
+            color: #999;
+        }
+    </style>
+</head>
+
+<body>
+
+	<div id="vueApp" :class="{ loading: loading }">
+
+		<div class="container">
+			<div style="margin-top: 2rem; padding-bottom: 1rem;"><h1>#NotesApp</h1></div>
+			     
+                <div class="float-right">
+                    <button class="btn btn-primary" @click="addNote()"><i class="fas fa-plus"></i>New</button>
+                    <button class="btn btn-warning" @click="delChecked()"><i class="fas fa-trash-alt"></i>Remove completed</button>
+                    <button class="btn btn-danger" @click="clearSrorage()"><i class="fas fa-broom"></i>Clear storage</button>
+                </div>
+                
+                <br>
+
+                <div class = "adding" v-if="AddingNote">
+                    <br>
+                    <label>Note title:</label>
+                    <input
+                        type = "text" 
+                        class="form-control" 
+                        placeholder="Enter note Title"
+                        v-model="NoteItem.heading" 
+                        autocomplete="off">
+
+                    <label>Note:</label>
+                    <input
+                        type = "text" 
+                        class="form-control" 
+                        placeholder="Enter note"
+                        v-model="NoteItem.note" 
+                        autocomplete="off">
+                    <br>
+
+                    <input type="radio" v-bind:value="{type: 'White' }" v-model="color_picked">
+                    <label for="one">White</label>
+                    <br>
+                    <input type="radio" v-bind:value="{type: 'Green'}"  v-model="color_picked">
+                    <label for="two">Green</label>
+                    <br>
+<!--                     <span>Picked: {{ font_picked.type }}</span> -->
+                    
+                    <br><br>
+                    <button class="btn btn-primary" @click="saveNote"><i class="fas fa-check"></i>Save</button>
+                    <button class="btn btn-warning" @click="cancel"><i class="fas fa-ban"></i>Cancel</button>
+                </div>
+         
+
+			<div class="notes" v-if="NotesShow">
+
+      			<div v-if="!list.length">
+                	<p class="text-muted">You have no notes :( </p>
+                </div>
+
+                <div v-else>
+                	<p class="text-muted">Notes: {{ list.length }}</p>
+                </div>
+
+                <div v-if="isShowData">
+                    <textarea  value = "title"></textarea>
+                    <textarea  value = "body"></textarea>
+                </div>
+
+                <div class="table-responsive"> 
+                    <table id = 'tab' class="table table-bordered" v-if="list.length">
+                        <thead>
+                            <tr>
+                                <td data-cell-style="cellStyle()">#</hd>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(note, index) in list" data-cell-style="info">
+                                <td v-bind:class="{'bg-success': note.isGreen, 'text-white': note.isGreen,}">
+                                    <input type="checkbox" v-bind:value="{ num: note.num, index: index }" v-model="selectedNotes" checked="false"></td>
+
+                                <td v-bind:class="{'bg-success': note.isGreen, 'text-white': note.isGreen,}">{{ note.heading }}</td>
+
+                                <td v-bind:class="{'bg-success': note.isGreen, 'text-white': note.isGreen,}">
+                                    <button class="btn btn-primary" @click="editItem(note)"><i class="far fa-eye"></i></button>
+                                    <button class="btn btn-danger" @click="delNote(note)"><i class="fas fa-trash-alt"></i></button>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+		</div>
+	</div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="NotesApp.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+
+    
+
+
+
+</body>
+</html>
