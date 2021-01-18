@@ -1,2 +1,2 @@
 #NotesApp
-![tables](/img/example.png)
+![tables](/Notes_app/img/example.png)
